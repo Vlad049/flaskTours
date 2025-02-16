@@ -13,6 +13,7 @@
             <h2 class="h5 card-title">{{ tour.title }}</h2>
             <p class="card-text">{{ tour.description }}</p>
             <a href="{{ url_for('get_tour', tour_id=tour.id) }}" class="btn btn-sm btn-primary">Деталі туру</a>
+            <a href="{{ url_for('delete_tour_by_user', tour_id=tour.id) }}" class="btn btn-sm btn-danger">Видалити</a>
           </div>
         </div>
       </div>

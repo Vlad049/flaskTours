@@ -21,6 +21,10 @@
             <h2 class="h5 card-title">{{ tour.title }}</h2>
             <p class="card-text">{{ tour.description }}</p>
             <a href="{{ url_for('get_tour', tour_id=tour.id) }}" class="btn btn-sm btn-primary">Деталі туру</a>
+
+            {% if current_user.is_authenticated and current_user.is_admin %}
+              <a href="{{ url_for('del_tour', tour_id=tour.id) }}" class="btn btn-sm btn-danger">Видалити тур</a>
+            {% endif %}
           </div>
         </div>
       </div>

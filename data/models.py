@@ -1,6 +1,6 @@
 from typing import List
 
-from sqlalchemy import String, ForeignKey, Table, Column
+from sqlalchemy import String, ForeignKey, Table, Column, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship, declarative_base
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -14,8 +14,8 @@ db = SQLAlchemy(model_class=Base, engine_options=dict(echo=True))
 user_tour_assoc = Table(
     "user_tour_assoc",
     Base.metadata,
-    Column("user_id", ForeignKey("users.id"), primary_key=True),
-    Column("tour_id", ForeignKey("tours.id"), primary_key=True)
+    Column("user_id", ForeignKey("users.id", ondelete="cascade"), primary_key=True),
+    Column("tour_id", ForeignKey("tours.id", ondelete="cascade"), primary_key=True)
 )
 
 
@@ -43,6 +43,7 @@ class User(db.Model, UserMixin):
     email: Mapped[str] = mapped_column(String(), nullable=False, unique=True)
     _password: Mapped[str] = mapped_column(String())
     tours: Mapped[List[Tour]] = relationship(secondary=user_tour_assoc)
+    is_admin: Mapped[bool] = mapped_column(Boolean(), default=False, nullable=True)
 
     @property
     def password(self):
